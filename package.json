@@ -14,11 +14,13 @@
     "lint": "tslint -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "test": "jest --config jestconfig.json",
+    "storybook": "start-storybook -s ./stories/assets -p 6006",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "prepare": "npm run build",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -37,16 +39,22 @@
   },
   "homepage": "https://github.com/jsparvath/npm-typescript-starter#readme",
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@storybook/html": "^5.2.6",
+    "@storybook/preset-typescript": "^1.1.0",
     "@types/jest": "^24.0.21",
+    "babel-loader": "^8.0.6",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
+    "react-docgen-typescript-loader": "^3.4.0",
     "rollup": "^1.27.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-typescript2": "^0.25.2",
     "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.1",
     "tslint": "^6.0.0-beta0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.4"
@@ -55,5 +63,6 @@
     "hooks": {
       "pre-commit": "npm run format && npm run lint && npm test"
     }
-  }
+  },
+  "dependencies": {}
 }
