@@ -1,5 +1,5 @@
 {
-  "name": "generic-zoom-react",
+  "name": "zoom-react",
   "version": "1.0.2",
   "description": "Medium zoom like functionality, but only transforming the container element. Suited for children that adjust automatically depending on the parent element such as gatsby-image.",
   "main": "lib/index.js",

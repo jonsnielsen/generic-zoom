@@ -1,1 +1,3 @@
-export const Greeter = (name: string) => `Hell00 ${name}`;
+import GenericZoom from './GenericZoom';
+
+export default GenericZoom;
