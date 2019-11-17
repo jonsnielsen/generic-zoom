@@ -1,7 +1,7 @@
 {
-  "name": "zoom-react",
-  "version": "1.0.2",
-  "description": "Medium zoom like functionality, but only transforming the container element. Suited for children that adjust automatically depending on the parent element such as gatsby-image.",
+  "name": "generic-zoom",
+  "version": "1.0.0",
+  "description": "Medium zoom like functionality, but only transforming the container element. Suited for children that adjust automatically depending on the parent element width - such as gatsby-image. (Note that for use with react, use the generic-medium-zoom-react package",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
   "jsnext:main": "lib/index.es.js",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jsparvath/npm-typescript-starter.git"
+    "url": "git+https://github.com/jsparvath/generic-zoom"
   },
   "keywords": [
     "WRITE",
