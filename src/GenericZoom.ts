@@ -1,16 +1,16 @@
-import { calculateScale, calculatePosition } from './utils/utils';
+import { calculateScale, calculatePosition, createOuterElemPortal } from './utils/utils';
 import { IMargin } from './types/types';
 
 interface IGenericZoom {
-  outerElem?: HTMLElement | null;
+  outerElem?: HTMLElement;
   elemToZoom: HTMLElement;
   elemToZoomWrapper: HTMLElement;
   zoomMargin?: IMargin;
 }
 
 class GenericZoom {
-  private outerElem: HTMLElement | null;
-  private elemToZoom: HTMLElement | null;
+  private outerElem: HTMLElement;
+  private elemToZoom: HTMLElement;
   private elemToZoomWrapper: HTMLElement;
   private zoomMargin: IMargin;
 
@@ -18,7 +18,8 @@ class GenericZoom {
   private applyZoomRef: any;
 
   constructor({
-    outerElem = typeof document === 'undefined' ? null : document.body,
+    // outerElem = typeof document === 'undefined' ? null : document.body,
+    outerElem = createOuterElemPortal(),
     elemToZoom,
     elemToZoomWrapper,
     zoomMargin = { vertical: 50, horizontal: 50 },
@@ -31,8 +32,6 @@ class GenericZoom {
   }
 
   private applyZoom() {
-    if (!this.outerElem || !this.elemToZoom) return;
-
     const elemToZoomWrapperRect = this.elemToZoomWrapper.getBoundingClientRect();
 
     const { translateX, translateY } = calculatePosition(this.outerElem, this.elemToZoomWrapper);

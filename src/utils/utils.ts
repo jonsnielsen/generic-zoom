@@ -27,27 +27,10 @@ export function calculatePosition(outerElem: HTMLElement, elemToZoom: HTMLElemen
   return { translateX, translateY };
 }
 
-// /**
-//  *
-//  * @param elem element that gets its children transfered to the new element. That new element becomes it's new child.
-//  */
-// export const makeNewInnerElem = (elem: HTMLElement): HTMLElement | null => {
-//   let newInnerElem: HTMLElement | null;
-//   if (typeof document === 'undefined') {
-//     newInnerElem = null;
-//   } else {
-//     newInnerElem = document.createElement('div');
-//     newInnerElem.style.width = '100%';
-//     newInnerElem.style.height = '100%';
-
-//     console.log(elem);
-//     // transfer elemToZooms children to newElemToZoom
-//     while (elem.firstChild) {
-//       console.log(elem.firstChild);
-//       newInnerElem.appendChild(elem.firstChild);
-//       elem.removeChild(elem.firstChild);
-//     }
-//     elem.appendChild(newInnerElem);
-//   }
-//   return newInnerElem;
-// };
+export function createOuterElemPortal() {
+  const outerElemPortal = document.createElement('div');
+  outerElemPortal.style.width = '100vw';
+  outerElemPortal.style.height = '100vh';
+  document.body.appendChild(outerElemPortal);
+  return outerElemPortal;
+}

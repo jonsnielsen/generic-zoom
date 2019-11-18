@@ -1,6 +1,6 @@
 {
   "name": "generic-zoom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Medium zoom like functionality, but only transforming the container element. Suited for children that adjust automatically depending on the parent element width - such as gatsby-image. (Note that for use with react, use the generic-medium-zoom-react package",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
@@ -10,7 +10,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run clean && rollup -c",
+    "clean": "rimraf lib",
     "lint": "tslint -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "test": "jest --config jestconfig.json",
@@ -48,6 +49,7 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "react-docgen-typescript-loader": "^3.4.0",
+    "rimraf": "^3.0.0",
     "rollup": "^1.27.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
