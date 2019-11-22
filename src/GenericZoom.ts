@@ -6,9 +6,11 @@ interface IGenericZoom {
   elemToZoom: HTMLElement;
   elemToZoomWrapper: HTMLElement;
   zoomMargin?: IMargin;
+  transitionDuration?: number;
 }
 
 class GenericZoom {
+  private transitionDuration: number;
   private outerElem: HTMLElement;
   private elemToZoom: HTMLElement;
   private elemToZoomWrapper: HTMLElement;
@@ -18,12 +20,13 @@ class GenericZoom {
   private applyZoomRef: any;
 
   constructor({
-    // outerElem = typeof document === 'undefined' ? null : document.body,
+    transitionDuration = 300,
     outerElem,
     elemToZoom,
     elemToZoomWrapper,
     zoomMargin = { vertical: 50, horizontal: 50 },
   }: IGenericZoom) {
+    this.transitionDuration = transitionDuration;
     this.outerElem = outerElem;
     this.elemToZoomWrapper = elemToZoomWrapper;
     this.elemToZoom = elemToZoom;
@@ -43,7 +46,7 @@ class GenericZoom {
       this.zoomMargin,
     );
 
-    this.elemToZoom.style.transition = 'transform 10300ms';
+    this.elemToZoom.style.transition = `transform ${this.transitionDuration}ms`;
     this.elemToZoom.style.transform = `translate3d(
       ${translateX}px,
       ${translateY}px,
