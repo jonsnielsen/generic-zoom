@@ -1,8 +1,8 @@
-import { calculateScale, calculatePosition, createOuterElemPortal } from './utils/utils';
+import { calculateScale, calculatePosition } from './utils';
 import { IMargin } from './types/types';
 
 interface IGenericZoom {
-  outerElem?: HTMLElement;
+  outerElem: HTMLElement;
   elemToZoom: HTMLElement;
   elemToZoomWrapper: HTMLElement;
   zoomMargin?: IMargin;
@@ -19,7 +19,7 @@ class GenericZoom {
 
   constructor({
     // outerElem = typeof document === 'undefined' ? null : document.body,
-    outerElem = createOuterElemPortal(),
+    outerElem,
     elemToZoom,
     elemToZoomWrapper,
     zoomMargin = { vertical: 50, horizontal: 50 },
@@ -43,7 +43,7 @@ class GenericZoom {
       this.zoomMargin,
     );
 
-    this.elemToZoom.style.transition = 'transform 300ms';
+    this.elemToZoom.style.transition = 'transform 10300ms';
     this.elemToZoom.style.transform = `translate3d(
       ${translateX}px,
       ${translateY}px,

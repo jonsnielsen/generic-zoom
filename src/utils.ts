@@ -1,4 +1,4 @@
-import { IMargin } from '../types/types';
+import { IMargin } from './types/types';
 
 export const calculateScale = (
   outerWidth: number,
@@ -27,10 +27,10 @@ export function calculatePosition(outerElem: HTMLElement, elemToZoom: HTMLElemen
   return { translateX, translateY };
 }
 
-export function createOuterElemPortal() {
-  const outerElemPortal = document.createElement('div');
-  outerElemPortal.style.width = '100vw';
-  outerElemPortal.style.height = '100vh';
-  document.body.appendChild(outerElemPortal);
-  return outerElemPortal;
-}
+// export function createOuterElemPortal() {
+//   const outerElemPortal = document.createElement('div');
+//   outerElemPortal.style.width = '100vw';
+//   outerElemPortal.style.height = '100vh';
+//   document.body.appendChild(outerElemPortal);
+//   return outerElemPortal;
+// }
