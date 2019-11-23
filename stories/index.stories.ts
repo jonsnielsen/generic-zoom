@@ -100,6 +100,49 @@ export const testGenericZoomWithOerlay = () => {
   return outerElem;
 };
 
+export const zoomToScroll = () => {
+  const outerElemWrapper = document.createElement('div');
+  outerElemWrapper.style.width = '100%';
+
+  const paddingElem = document.createElement('div');
+  paddingElem.style.height = '1000px';
+  paddingElem.style.width = '100%';
+
+  const outerElem = document.createElement('div');
+  outerElem.style.width = '100%';
+  outerElem.style.height = '500px';
+  outerElem.style.backgroundColor = 'blue';
+  outerElem.style.position = 'relative';
+  outerElem.style.right = '-200px';
+
+  const imageWrapper = document.createElement('div');
+  imageWrapper.style.width = 'fit-content';
+
+  const img = document.createElement('img');
+  img.src = '/pickle.png';
+  img.style.width = '100px';
+
+  const genericZoom = new GenericZoom({ outerElem, elemToZoom: img, elemToZoomWrapper: imageWrapper });
+  img.addEventListener('click', () => {
+    genericZoom.zoom();
+  });
+
+  const button = document.createElement('button');
+  button.innerText = 'un zoom';
+  button.addEventListener('click', () => {
+    genericZoom.unZoom();
+  });
+
+  imageWrapper.appendChild(img);
+  paddingElem.appendChild(imageWrapper);
+  paddingElem.appendChild(button);
+
+  outerElemWrapper.appendChild(paddingElem);
+  outerElemWrapper.appendChild(outerElem);
+
+  return outerElemWrapper;
+};
+
 /**
  * withDefaultOuterElem is deprecated. you HAVE to give it an outerElem
  */
