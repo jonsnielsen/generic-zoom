@@ -1,11 +1,11 @@
 import { IMargin } from './types/types';
 
 export const getScrollX = (elem: HTMLElement) => {
-  return elem ? elem.offsetLeft : 0;
+  return elem.getBoundingClientRect().left;
 };
 
 export const getScrollY = (elem: HTMLElement) => {
-  return elem.offsetTop;
+  return elem.getBoundingClientRect().top;
 };
 
 export const getDocumentScrollY = () => {
@@ -28,26 +28,21 @@ export const calculateScale = (
   return Math.min(scaleX, scaleY);
 };
 
-export function calculatePosition(outerElem: HTMLElement, elemToZoomWrapper: HTMLElement) {
-  const outerRectCenterX = outerElem.clientWidth / 2 + getScrollX(outerElem); // whats difference outerElem.clientWidth and outerRect.left + elemToZoomRect
-  const outerRectCenterY = outerElem.clientHeight / 2 + getScrollY(outerElem); // originally: const viewportY = window.innerHeight / 2;
+export function calculatePosition(outerElem: HTMLElement, targetElem: HTMLElement) {
+  const outerElemRect = outerElem.getBoundingClientRect();
+  const targetElemRect = targetElem.getBoundingClientRect();
 
-  const elemToZoomRect = elemToZoomWrapper.getBoundingClientRect();
-  const elemToZoomCenterX = elemToZoomRect.left + elemToZoomRect.width / 2;
-  const elemToZoomCenterY = elemToZoomRect.top + elemToZoomRect.height / 2;
+  const outerElemCenterX = outerElemRect.width / 2;
+  const outerElemCenterY = outerElemRect.height / 2;
 
-  // Get offset amounts for image coords to be centered on screen
-  const translateX = outerRectCenterX - elemToZoomCenterX - getDocumentScrollX();
-  const translateY = outerRectCenterY - elemToZoomCenterY - getDocumentScrollY();
-  console.log({ translateY });
+  const targetElemCenterX = targetElemRect.width / 2;
+  const targetElemCenterY = targetElemRect.height / 2;
+
+  const diffOffsetLeft = getScrollX(outerElem) - getScrollX(targetElem); // TODO: Test what if target element is scrolled down from start?
+  const diffOffsetTop = getScrollY(outerElem) - getScrollY(targetElem); // TODO: Test what if target element is scrolled down from start?
+
+  const translateX = outerElemCenterX - targetElemCenterX + diffOffsetLeft;
+  const translateY = outerElemCenterY - targetElemCenterY + diffOffsetTop;
 
   return { translateX, translateY };
 }
-
-// export function createOuterElemPortal() {
-//   const outerElemPortal = document.createElement('div');
-//   outerElemPortal.style.width = '100vw';
-//   outerElemPortal.style.height = '100vh';
-//   document.body.appendChild(outerElemPortal);
-//   return outerElemPortal;
-// }

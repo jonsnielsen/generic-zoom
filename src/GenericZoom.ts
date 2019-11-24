@@ -18,8 +18,7 @@ class GenericZoom {
   private elemToZoomWrapper: HTMLElement;
   private zoomMargin: IMargin;
 
-  // This reference is a way to remove event listener later, since when adding listener, we need to bind "this"
-  private applyZoomRef: any;
+  private isZoomed = false;
 
   constructor({
     transitionDuration = 300,
@@ -37,41 +36,44 @@ class GenericZoom {
     this.zoomMargin = zoomMargin;
 
     this.elemToZoom.style.position = 'relative';
-    this.applyZoomRef = this.applyZoom.bind(this);
+    this.elemToZoom.style.transition = `transform ${this.transitionDuration}ms`;
   }
 
-  private applyZoom() {
+  private applyZoom = () => {
     const elemToZoomWrapperRect = this.elemToZoomWrapper.getBoundingClientRect();
+    const outerElemRect = this.outerElem.getBoundingClientRect();
 
     const { translateX, translateY } = calculatePosition(this.outerElem, this.elemToZoomWrapper);
     const scale = calculateScale(
-      this.outerElem.clientWidth,
-      this.outerElem.clientHeight,
+      outerElemRect.width,
+      outerElemRect.height,
       elemToZoomWrapperRect.width,
       elemToZoomWrapperRect.height,
       this.zoomMargin,
     );
 
     this.elemToZoom.style.zIndex = `${this.activeZIndex}`;
-    this.elemToZoom.style.transition = `transform ${this.transitionDuration}ms`;
     this.elemToZoom.style.transform = `translate3d(
       ${translateX}px,
       ${translateY}px,
       0) scale(${scale})`;
-  }
+  };
 
   private onTransitionEnd = () => {
+    if (this.isZoomed) return;
     this.elemToZoom.style.zIndex = 'inherit';
     this.elemToZoom.removeEventListener('transitionend', this.onTransitionEnd);
   };
 
   zoom() {
+    this.isZoomed = true;
     this.applyZoom();
-    window.addEventListener('resize', this.applyZoomRef);
+    window.addEventListener('resize', this.applyZoom);
   }
 
   unZoom() {
-    window.removeEventListener('resize', this.applyZoomRef);
+    this.isZoomed = false;
+    window.removeEventListener('resize', this.applyZoom);
     if (!this.elemToZoom) return;
     this.elemToZoom.addEventListener('transitionend', this.onTransitionEnd);
     this.elemToZoom.style.transform = `translate3d(

@@ -1,4 +1,5 @@
 import GenericZoom, { ZoomOverlay } from '../src/index';
+import { makeZoomButtons } from './utils';
 export default {
   title: 'Demo',
 };
@@ -34,39 +35,84 @@ export const withOuterElem = () => {
 };
 
 export const testZoomOverlay = () => {
+  const outerElemWrapper = document.createElement('div');
+
   const outerElem = document.createElement('div');
   outerElem.style.width = '100%';
   outerElem.style.height = '500px';
+  outerElem.style.position = 'relative';
   outerElem.style.backgroundColor = 'blue';
+  outerElem.innerText = 'overlay should cover this';
 
-  const zoomOverlay = new ZoomOverlay({ outerElem });
+  // zoom overlay
+  const zoomOverlayElem = document.createElement('div');
+  const zoomOverlay = new ZoomOverlay({ outerElem, overlayElem: zoomOverlayElem });
 
-  const zoomInButton = document.createElement('button');
-  zoomInButton.innerText = 'zoom';
-  zoomInButton.addEventListener('click', () => {
-    zoomOverlay.zoom();
-  });
-  const zoomOutButton = document.createElement('button');
-  zoomOutButton.style.position = 'absolute';
-  zoomOutButton.style.bottom = '-30px';
-  zoomOutButton.innerText = 'zoom out';
-  zoomOutButton.addEventListener('click', () => {
-    zoomOverlay.unZoom();
-  });
+  const zoomOverlayContainer = document.createElement('div');
+  zoomOverlayContainer.style.position = 'relative';
+  zoomOverlayContainer.style.width = '50px';
+  zoomOverlayContainer.style.height = '50px';
+  zoomOverlayContainer.style.backgroundColor = 'red';
+  zoomOverlayContainer.innerText = 'overlay lives here';
+  zoomOverlayContainer.appendChild(zoomOverlayElem);
 
-  outerElem.appendChild(zoomInButton);
-  outerElem.appendChild(zoomOutButton);
-  return outerElem;
+  const buttons = makeZoomButtons({ zoomOverlay });
+  buttons.style.position = 'absolute';
+  buttons.style.bottom = '-30px';
+  outerElem.appendChild(buttons);
+
+  outerElemWrapper.appendChild(zoomOverlayContainer);
+  outerElemWrapper.appendChild(outerElem);
+  return outerElemWrapper;
+};
+
+export const testZoomOverlayWithScroll = () => {
+  const outerElemWrapper = document.createElement('div');
+
+  const paddingElem = document.createElement('div');
+  paddingElem.style.height = '1000px';
+  paddingElem.style.width = '100%';
+
+  const outerElem = document.createElement('div');
+  outerElem.style.width = '100%';
+  outerElem.style.height = '500px';
+  outerElem.style.position = 'relative';
+  outerElem.style.backgroundColor = 'blue';
+  outerElem.innerText = 'overlay should cover this';
+
+  // zoom overlay
+  const zoomOverlayElem = document.createElement('div');
+  const zoomOverlay = new ZoomOverlay({ outerElem, overlayElem: zoomOverlayElem });
+
+  const zoomOverlayContainer = document.createElement('div');
+  // zoomOverlayContainer.style.position = 'relative';
+  zoomOverlayContainer.style.width = '50px';
+  zoomOverlayContainer.style.height = '50px';
+  zoomOverlayContainer.style.backgroundColor = 'red';
+  zoomOverlayContainer.innerText = 'overlay lives here';
+  zoomOverlayContainer.appendChild(zoomOverlayElem);
+
+  const buttons = makeZoomButtons({ zoomOverlay });
+  buttons.style.position = 'absolute';
+  buttons.style.bottom = '-30px';
+  paddingElem.appendChild(buttons);
+
+  outerElemWrapper.appendChild(zoomOverlayContainer);
+  outerElemWrapper.appendChild(paddingElem);
+  outerElemWrapper.appendChild(outerElem);
+  return outerElemWrapper;
 };
 
 export const testGenericZoomWithOerlay = () => {
   const outerElem = document.createElement('div');
+  outerElem.style.position = 'relative';
   outerElem.style.width = '100%';
   outerElem.style.height = '500px';
   outerElem.style.backgroundColor = 'blue';
 
   // Zoom overlay
-  const zoomOverlay = new ZoomOverlay({ outerElem });
+  const zoomOverlayElem = document.createElement('div');
+  const zoomOverlay = new ZoomOverlay({ outerElem, overlayElem: zoomOverlayElem });
 
   // Generic Zoom
   const imageWrapper = document.createElement('div');
@@ -78,25 +124,17 @@ export const testGenericZoomWithOerlay = () => {
 
   const genericZoom = new GenericZoom({ outerElem, elemToZoom: img, elemToZoomWrapper: imageWrapper });
 
-  const zoomInButton = document.createElement('button');
-  zoomInButton.innerText = 'zoom';
-  zoomInButton.addEventListener('click', () => {
-    zoomOverlay.zoom();
-    genericZoom.zoom();
-  });
-  const zoomOutButton = document.createElement('button');
-  zoomOutButton.style.position = 'absolute';
-  zoomOutButton.style.bottom = '-30px';
-  zoomOutButton.innerText = 'zoom out';
-  zoomOutButton.addEventListener('click', () => {
-    zoomOverlay.unZoom();
-    genericZoom.unZoom();
-  });
+  const buttons = makeZoomButtons({ zoomOverlay, genericZoom });
+  buttons.style.position = 'absolute';
+  buttons.style.bottom = '-30px';
+  outerElem.appendChild(buttons);
 
   imageWrapper.appendChild(img);
+
+  outerElem.appendChild(zoomOverlayElem);
   outerElem.appendChild(imageWrapper);
-  outerElem.appendChild(zoomInButton);
-  outerElem.appendChild(zoomOutButton);
+  outerElem.appendChild(buttons);
+
   return outerElem;
 };
 
