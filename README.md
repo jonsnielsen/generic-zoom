@@ -1,6 +1,6 @@
 Work in progress: NOT PRODUCTION READY YET!
 
-Inspired by [Medium Zoom](https://github.com/francoischalifour/medium-zoom/), but working by transforming the container element. Suited for children that adjust automatically depending on the parent element width - such as gatsby-image.
+Inspired by [Medium Zoom](https://github.com/francoischalifour/medium-zoom/), but working by transforming the container element. Implied by the 'generic' part of the name, anything put in the component will be tranformed and scaled.
 
 ## Installation
 
@@ -33,7 +33,7 @@ interface IGenericZoom {
   transitionDuration?: number;
   activeZIndex?: number;
 }
-mediumZoom({ outerElem, elemToZoomWrapper, elemToZoom, zoomMargin, transitionDuration, activeZIndex });
+GenericZoom({ outerElem, elemToZoomWrapper, elemToZoom, zoomMargin, transitionDuration, activeZIndex });
 ```
 
 ## framework integrations
